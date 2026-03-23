@@ -1,3 +1,9 @@
+# Internal / AI tooling
+.claude/
+ai/
+CLAUDE.md
+product-vision.md
+
 # Dependencies
 node_modules/
 
