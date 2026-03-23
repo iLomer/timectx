@@ -1,5 +1,18 @@
 {
-  "dependencies": {
-    "meto-cli": "^0.11.3"
+  "name": "timectx",
+  "version": "0.1.0",
+  "license": "MIT",
+  "bin": {
+    "timectx": "./bin/install.js"
+  },
+  "files": [
+    "bin",
+    "src"
+  ],
+  "engines": {
+    "node": ">=16"
+  },
+  "devDependencies": {
+    "buildrack": "latest"
   }
 }
