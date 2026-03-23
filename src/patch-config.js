@@ -3,30 +3,31 @@
 const fs = require('fs');
 const path = require('path');
 
-const DATE_PREFIX = "Today's date is ";
-const DATE_SUFFIX = '.';
+const KEY = 'currentDateTime';
 
-function currentDateString() {
-  return new Date().toISOString().split('T')[0];
-}
-
-function buildDateValue(dateStr) {
-  return `${DATE_PREFIX}${dateStr}${DATE_SUFFIX}`;
+function currentDateTimeString() {
+  const now = new Date();
+  const date = now.toISOString().split('T')[0];
+  const time = now.toTimeString().split(' ')[0]; // HH:MM:SS
+  return `Today's date and time is ${date} ${time}.`;
 }
 
 function patchConfig(config) {
-  const dateStr = currentDateString();
-  const dateValue = buildDateValue(dateStr);
+  const dateValue = currentDateTimeString();
   const base = config !== null && typeof config === 'object' ? config : {};
 
-  if ('currentDate' in base) {
-    if (base.currentDate === dateValue) {
-      return { config: Object.assign({}, base), status: 'unchanged' };
-    }
-    return { config: Object.assign({}, base, { currentDate: dateValue }), status: 'updated' };
+  // migrate old key if present
+  const hasOldKey = 'currentDate' in base;
+  const hasKey = KEY in base;
+
+  if (!hasOldKey && hasKey && base[KEY] === dateValue) {
+    return { config: Object.assign({}, base), status: 'unchanged' };
   }
 
-  return { config: Object.assign({}, base, { currentDate: dateValue }), status: 'injected' };
+  const updated = Object.assign({}, base, { [KEY]: dateValue });
+  if (hasOldKey) delete updated.currentDate;
+
+  return { config: updated, status: hasKey || hasOldKey ? 'updated' : 'injected' };
 }
 
 function writeConfig(filePath, config) {

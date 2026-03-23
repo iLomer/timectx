@@ -13,7 +13,7 @@ if (command !== 'install') {
   process.exit(1);
 }
 
-process.stdout.write('timectx \u2014 injecting currentDate into Claude config...\n');
+process.stdout.write('timectx \u2014 injecting currentDateTime into Claude config...\n');
 
 try {
   const configPath = detectConfigPath();
@@ -28,9 +28,9 @@ try {
   writeConfig(configPath, config);
 
   if (status === 'injected') {
-    process.stdout.write(`Done. currentDate injected into ${configPath}\n`);
+    process.stdout.write(`Done. currentDateTime injected into ${configPath}\n`);
   } else {
-    process.stdout.write(`Done. currentDate updated in ${configPath}\n`);
+    process.stdout.write(`Done. currentDateTime updated in ${configPath}\n`);
   }
 
   process.exit(0);
