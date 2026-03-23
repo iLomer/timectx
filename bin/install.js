@@ -1,7 +1,6 @@
 #!/usr/bin/env node
 'use strict';
 
-const path = require('path');
 const { detectConfigPath } = require('../src/detect-config-path.js');
 const { readConfig } = require('../src/read-config.js');
 const { patchConfig, writeConfig } = require('../src/patch-config.js');
@@ -9,12 +8,15 @@ const { patchClaudeCode } = require('../src/patch-claude-code.js');
 
 const command = process.argv[2];
 
+if (command === 'mcp') {
+  require('../src/mcp-server.js');
+  return;
+}
+
 if (command !== 'install') {
   process.stderr.write('Usage: timectx install\n');
   process.exit(1);
 }
-
-const mcpServerPath = path.resolve(__dirname, '../src/mcp-server.js');
 
 process.stdout.write('timectx — patching Claude surfaces...\n\n');
 
@@ -24,7 +26,7 @@ let anyError = false;
 try {
   const configPath = detectConfigPath();
   const existing = readConfig(configPath);
-  const { config, status } = patchConfig(existing, mcpServerPath);
+  const { config, status } = patchConfig(existing);
 
   if (status === 'unchanged') {
     process.stdout.write(`  Claude Desktop  already up to date\n`);

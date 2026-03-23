@@ -3,18 +3,22 @@
 const fs = require('fs');
 const path = require('path');
 
-function patchConfig(config, mcpServerPath) {
+const MCP_COMMAND = 'npx';
+const MCP_ARGS = ['-y', 'timectx', 'mcp'];
+
+function patchConfig(config) {
   const base = config !== null && typeof config === 'object' ? config : {};
 
-  // clean up old dead key from 0.1.x
+  // clean up old dead keys from 0.1.x
   const cleaned = Object.assign({}, base);
   delete cleaned.currentDate;
   delete cleaned.currentDateTime;
 
   const existing = cleaned.mcpServers || {};
-  const alreadyRegistered = existing.timectx &&
-    existing.timectx.args &&
-    existing.timectx.args[0] === mcpServerPath;
+  const entry = existing.timectx;
+  const alreadyRegistered = entry &&
+    entry.command === MCP_COMMAND &&
+    JSON.stringify(entry.args) === JSON.stringify(MCP_ARGS);
 
   if (alreadyRegistered) {
     return { config: cleaned, status: 'unchanged' };
@@ -22,11 +26,11 @@ function patchConfig(config, mcpServerPath) {
 
   const updated = Object.assign({}, cleaned, {
     mcpServers: Object.assign({}, existing, {
-      timectx: { command: 'node', args: [mcpServerPath] }
+      timectx: { command: MCP_COMMAND, args: MCP_ARGS }
     })
   });
 
-  return { config: updated, status: Object.keys(existing).includes('timectx') ? 'updated' : 'injected' };
+  return { config: updated, status: 'timectx' in existing ? 'updated' : 'injected' };
 }
 
 function writeConfig(filePath, config) {
