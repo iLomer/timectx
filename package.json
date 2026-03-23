@@ -1,6 +1,6 @@
 {
   "name": "timectx",
-  "version": "0.1.5",
+  "version": "0.1.6",
   "description": "Fixes Claude's missing clock — injects current date and time into Claude Desktop and Claude Code automatically.",
   "license": "MIT",
   "keywords": [
