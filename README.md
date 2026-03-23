@@ -8,6 +8,8 @@ npx timectx install
 
 Patches **Claude Desktop** and **Claude Code** automatically. No config editing, no setup.
 
+For **claude.ai** in the browser — install the [Chrome extension](https://github.com/iLomer/timectx/tree/main/extension).
+
 Claude has no internal clock. It gets the date once at session start
 and never updates it. Long sessions drift. New chats sometimes get
 the wrong timezone. And if you ever mention you're tired, it becomes
@@ -19,6 +21,7 @@ This fixes it.
 
 - **Claude Desktop** — restart the app once, then it's live
 - **Claude Code** — works immediately
+- **claude.ai (browser)** — install the Chrome extension, done
 
 ## Requirements
 
