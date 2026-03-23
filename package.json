@@ -1,6 +1,6 @@
 {
   "name": "timectx",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "license": "MIT",
   "bin": {
     "timectx": "./bin/install.js"
@@ -14,5 +14,8 @@
   },
   "devDependencies": {
     "buildrack": "latest"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.27.1"
   }
 }

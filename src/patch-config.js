@@ -3,31 +3,30 @@
 const fs = require('fs');
 const path = require('path');
 
-const KEY = 'currentDateTime';
-
-function currentDateTimeString() {
-  const now = new Date();
-  const date = now.toISOString().split('T')[0];
-  const time = now.toTimeString().split(' ')[0]; // HH:MM:SS
-  return `Today's date and time is ${date} ${time}.`;
-}
-
-function patchConfig(config) {
-  const dateValue = currentDateTimeString();
+function patchConfig(config, mcpServerPath) {
   const base = config !== null && typeof config === 'object' ? config : {};
 
-  // migrate old key if present
-  const hasOldKey = 'currentDate' in base;
-  const hasKey = KEY in base;
+  // clean up old dead key from 0.1.x
+  const cleaned = Object.assign({}, base);
+  delete cleaned.currentDate;
+  delete cleaned.currentDateTime;
 
-  if (!hasOldKey && hasKey && base[KEY] === dateValue) {
-    return { config: Object.assign({}, base), status: 'unchanged' };
+  const existing = cleaned.mcpServers || {};
+  const alreadyRegistered = existing.timectx &&
+    existing.timectx.args &&
+    existing.timectx.args[0] === mcpServerPath;
+
+  if (alreadyRegistered) {
+    return { config: cleaned, status: 'unchanged' };
   }
 
-  const updated = Object.assign({}, base, { [KEY]: dateValue });
-  if (hasOldKey) delete updated.currentDate;
+  const updated = Object.assign({}, cleaned, {
+    mcpServers: Object.assign({}, existing, {
+      timectx: { command: 'node', args: [mcpServerPath] }
+    })
+  });
 
-  return { config: updated, status: hasKey || hasOldKey ? 'updated' : 'injected' };
+  return { config: updated, status: Object.keys(existing).includes('timectx') ? 'updated' : 'injected' };
 }
 
 function writeConfig(filePath, config) {
