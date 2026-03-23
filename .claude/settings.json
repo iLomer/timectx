@@ -1,0 +1,23 @@
+{
+  "env": {
+    "CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS": "1"
+  },
+  "agents": [
+    {
+      "slug": "meto-epic-e1",
+      "file": ".claude/agents/epic-agent-E1.md"
+    },
+    {
+      "slug": "meto-epic-e2",
+      "file": ".claude/agents/epic-agent-E2.md"
+    },
+    {
+      "slug": "meto-epic-e3",
+      "file": ".claude/agents/epic-agent-E3.md"
+    },
+    {
+      "slug": "meto-epic-e4",
+      "file": ".claude/agents/epic-agent-E4.md"
+    }
+  ]
+}
