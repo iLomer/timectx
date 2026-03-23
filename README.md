@@ -6,11 +6,11 @@ Fixes Claude's most annoying limitation: it has no idea what time it is.
 npx timectx install
 ```
 
-That's it. Detects your Claude Desktop config, injects today's date. No JSON editing, no technical knowledge needed.
+That's it. Detects your Claude Desktop config, injects the current date and time. No JSON editing, no technical knowledge needed.
 
 ## What it does
 
-Adds a `currentDate` entry to your Claude Desktop config so Claude always knows what day it is. No more "best practices 2024" when you're in 2026.
+Adds a `currentDateTime` entry to your Claude Desktop config so Claude always knows the date and time. No more "best practices 2024" when you're in 2026. No more being told to go to sleep at 2pm.
 
 ## Supported platforms
 
@@ -29,7 +29,7 @@ Adds a `currentDate` entry to your Claude Desktop config so Claude always knows 
 npx timectx install
 ```
 
-Re-run anytime to update the date (e.g. add it to a login script).
+Re-run anytime to update the date and time (e.g. add it to a login script).
 
 ## License
 
