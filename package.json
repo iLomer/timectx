@@ -1,7 +1,18 @@
 {
   "name": "timectx",
-  "version": "0.1.4",
+  "version": "0.1.5",
+  "description": "Fixes Claude's missing clock — injects current date and time into Claude Desktop and Claude Code automatically.",
   "license": "MIT",
+  "keywords": [
+    "claude",
+    "claude-desktop",
+    "claude-code",
+    "anthropic",
+    "mcp",
+    "datetime",
+    "ai",
+    "cli"
+  ],
   "bin": {
     "timectx": "./bin/install.js"
   },
